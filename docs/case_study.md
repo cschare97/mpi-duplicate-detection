@@ -51,4 +51,4 @@ In seed 42, 466 of 414,505 pairs (about 0.1%) needed a person. `likely_duplicate
 - Sending SSNs through a language-model prompt is unsuitable for real data. Real use needs HIPAA compliance and a BAA where required.
 
 ## 7. Repo
-[FILL: GitHub link]. File list, run steps and `DATA_DICTIONARY.md` are in the README.
+https://github.com/cschare97/mpi-duplicate-detection. File list, run steps and `DATA_DICTIONARY.md` are in the README.
