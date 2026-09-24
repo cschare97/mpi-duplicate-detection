@@ -1,0 +1,6 @@
+# Python 3.10 or newer is needed for fastmcp (mpi_dedup_server.py, test_mcp_server.py).
+# patient_match.py, the eval script and the agent test also run on older 3.x.
+jellyfish
+fastmcp
+ollama
+pymysql

@@ -1,0 +1,81 @@
+model: nemotron-3.5-lightning
+
+--- near-match last name, different SSN
+  tool called:            True
+  args exact:             True
+  result == direct call:  True
+  direct call result:     possible_duplicate_review (score 0.595)
+  model's final answer: Based on the comparison:
+
+- **Date of Birth (DOB):** Exact match (Feb. 17, 1979)  
+- **First name:** Exact match (Maren)  
+- **Last name:** Near‑match (“Whitlock” vs. “Whitlok”) with a similarity score of 0.97  
+- **Social Security Number (SSN):** Does **not** match (999‑11‑2233 vs. 999‑44‑5566)
+
+**Result:** The system returns a score of **0.595** and flags this as a **"possible_duplicate_review."**  
+
+**Interpretation:** The records are very likely referring to the same patient, given the matching DOB and first name plus the near‑identical last name. However, the SSN discrepancy means you should review the records manually before confirming they are a duplicate.
+
+--- nickname, same SSN
+  tool called:            True
+  args exact:             True
+  result == direct call:  True
+  direct call result:     likely_duplicate (score 1.0)
+  model's final answer: Based on the duplicate‑record analysis:
+
+- **Score:** 1.0 (maximum similarity)  
+- **Verdict:** `likely_duplicate`  
+- **Matching fields:**  
+  - SSN: exact match (999‑77‑1234)  
+  - DOB: exact match (Aug. 3, 1990)  
+  - Last name: exact match (Okafor)  
+  - First name: recognized as a variant (`Daniel` vs. `Dan`)
+
+**Conclusion:** The two records are almost certainly the same patient. The only difference is the first name (“Daniel” vs. “Dan”), which the system treats as a known variant, while all other identifying information (SSN, DOB, last name) is identical.
+
+--- SSN digit transposition
+  tool called:            True
+  args exact:             True
+  result == direct call:  True
+  direct call result:     likely_duplicate (score 0.9)
+  model's final answer: **Result:** The two records are **likely the same patient** (score 0.9, verdict “likely_duplicate”).
+
+**Why they match despite the different SSNs**
+
+| Field | Record A | Record B | Match? |
+|-------|----------|----------|--------|
+| **Last name** | Nandakumar | Nandakumar | ✅ Exact match |
+| **First name** | Priya | Priya | ✅ Exact match |
+| **Date of birth** | Jun 9, 2001 | Jun 9, 2001 | ✅ Exact match |
+| **SSN** | 999‑52‑6781 | 999‑52‑6718 | ❌ Different, but only one digit pair transposed (678 → 671) |
+
+**Key reason from the system:**  
+> “SSN matches except for one transposed digit pair (classic data‑entry error)”
+
+The only discrepancy is a single‑digit swap in the last four digits of the Social Security Number (678 vs. 671). This pattern is a very common typo when entering SSNs manually, and when combined with the identical name and birth date, it strongly suggests the two records refer to the same individual.
+
+**Conclusion:**  
+You can treat these two records as representing the same patient, with the SSN difference being a likely data‑entry mistake. If you need to merge or update the records, the shared name and DOB provide a reliable basis for doing so.
+
+--- clearly different people
+  tool called:            True
+  args exact:             True
+  result == direct call:  True
+  direct call result:     not_a_match (score 0.203)
+  model's final answer: The two records are **not** for the same patient.  
+
+- Record A: Grant, Hollis – DOB Mar 30 1965 – SSN 999‑20‑4471  
+- Record B: Brandt, Tessa – DOB Nov 12 2010 – SSN 999‑83‑9052  
+
+The comparison returned a **score of 0.203** and the verdict **“not_a_match.”** The system flagged two mismatches:  
+
+1. **SSN does not match** (999‑20‑4471 vs. 999‑83‑9052)  
+2. **DOB does not match** (1965 vs. 2010)  
+
+Since both the date of birth and the Social Security number differ, the records represent two distinct individuals.
+
+============================================================
+tool called:             4/4
+args exact:              4/4
+result == direct call:   4/4
+Model output varies between runs; report the run you actually did.

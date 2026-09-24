@@ -1,0 +1,78 @@
+======================================================================
+seed=7  n_each=25
+Synthea bundle files found: 586   skipped (no Patient/SSN/name/DOB): 0
+Base patients used: 586
+Injected records: 325  by type: {'exact_dup': 25, 'typo_first': 25, 'typo_last': 25, 'ssn_transpose': 25, 'ssn_substitute': 25, 'dob_day_typo': 25, 'name_swap': 25, 'nickname': 25, 'masked_ssn': 25, 'twin': 25, 'ssn_collision': 25, 'near_ssn': 25, 'same_dob': 25}
+Total records: 911   pairs compared: 414505
+Scan time: 8.33s
+======================================================================
+
+Flagged = likely OR possible (review)
+  TP=266  FP=150  FN=3  TN=414086
+  precision=0.6394   recall=0.9888
+
+Flagged = likely_duplicate only
+  TP=206  FP=0  FN=63  TN=414236
+  precision=1.0000   recall=0.7658
+
+Recall by injected type, each injected record vs its own base record
+  (review threshold / likely-only threshold):
+  exact_dup       25/25   |   25/25
+  typo_first      25/25   |   25/25
+  typo_last       25/25   |   25/25
+  ssn_transpose   25/25   |   25/25
+  ssn_substitute  25/25   |   0/25
+  dob_day_typo    25/25   |   0/25
+  name_swap       25/25   |   25/25
+  nickname        25/25   |   25/25
+  masked_ssn      25/25   |   25/25
+
+False positives by record-kind pair (review threshold):
+  base|base                      67
+  base|twin                      26
+  base|same_dob                  11
+  base|masked_ssn                7
+  base|typo_first                6
+  base|ssn_transpose             5
+  base|ssn_substitute            3
+  base|exact_dup                 3
+  typo_last|twin                 3
+  base|nickname                  2
+  base|name_swap                 2
+  exact_dup|twin                 2
+  typo_first|twin                2
+  typo_last|same_dob             2
+  base|typo_last                 1
+  exact_dup|masked_ssn           1
+  typo_first|ssn_transpose       1
+  ssn_transpose|twin             1
+  name_swap|twin                 1
+  masked_ssn|twin                1
+  masked_ssn|same_dob            1
+  masked_ssn|near_ssn            1
+  ssn_collision|near_ssn         1
+
+Missed true duplicates (review threshold): 3 (first 10)
+  ssn_substitute|dob_day_typo score=0.42 verdict=not_a_match reasons=['SSN differs by 1-2 digits (could be a typo, or a different individual with a similar SSN)', 'DOB does not match', 'Last name exact match', 'First name exact match']
+     A: {'first_name': 'Riva', 'last_name': 'Altenwerth', 'dob': '1986-02-25', 'ssn': 'XXX-XX-5050'}
+     B: {'first_name': 'Riva', 'last_name': 'Altenwerth', 'dob': '1986-02-26', 'ssn': 'XXX-XX-5050'}
+  ssn_substitute|dob_day_typo score=0.42 verdict=not_a_match reasons=['SSN differs by 1-2 digits (could be a typo, or a different individual with a similar SSN)', 'DOB does not match', 'Last name exact match', 'First name exact match']
+     A: {'first_name': 'Terrance', 'last_name': 'Kuhic', 'dob': '1992-12-12', 'ssn': 'XXX-XX-2901'}
+     B: {'first_name': 'Terrance', 'last_name': 'Kuhic', 'dob': '1992-12-13', 'ssn': 'XXX-XX-2901'}
+  ssn_substitute|dob_day_typo score=0.42 verdict=not_a_match reasons=['SSN differs by 1-2 digits (could be a typo, or a different individual with a similar SSN)', 'DOB does not match', 'Last name exact match', 'First name exact match']
+     A: {'first_name': 'Alyssa', 'last_name': 'Feil', 'dob': '2004-05-04', 'ssn': 'XXX-XX-4583'}
+     B: {'first_name': 'Alyssa', 'last_name': 'Feil', 'dob': '2004-05-05', 'ssn': 'XXX-XX-4583'}
+
+False positives (review threshold): 150 (first 10)
+  base|base score=0.48 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.453 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.464 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.46 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.453 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.478 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.451 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.456 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.475 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+  base|base score=0.459 verdict=possible_duplicate_review reasons=['SSN does not match', 'DOB exact match']
+
+Saved: eval_seed7/records_labels.csv, eval_seed7/flagged_pairs.csv

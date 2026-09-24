@@ -1,0 +1,15 @@
+# secrets
+.env
+*.pem
+*.key
+
+# generated data
+fhir/
+eval_output/
+eval_seed*/
+
+# python / OS
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
